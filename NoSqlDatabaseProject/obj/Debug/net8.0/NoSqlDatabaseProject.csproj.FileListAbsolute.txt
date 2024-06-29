@@ -1,0 +1,17 @@
+C:\Windows\System32\NoSqlDatabaseProject\bin\Debug\net8.0\NoSqlDatabaseProject.exe
+C:\Windows\System32\NoSqlDatabaseProject\bin\Debug\net8.0\NoSqlDatabaseProject.deps.json
+C:\Windows\System32\NoSqlDatabaseProject\bin\Debug\net8.0\NoSqlDatabaseProject.runtimeconfig.json
+C:\Windows\System32\NoSqlDatabaseProject\bin\Debug\net8.0\NoSqlDatabaseProject.dll
+C:\Windows\System32\NoSqlDatabaseProject\bin\Debug\net8.0\NoSqlDatabaseProject.pdb
+C:\Windows\System32\NoSqlDatabaseProject\bin\Debug\net8.0\LiteDB.dll
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\NoSqlDatabaseProject.csproj.AssemblyReference.cache
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\NoSqlDatabaseProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\NoSqlDatabaseProject.AssemblyInfoInputs.cache
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\NoSqlDatabaseProject.AssemblyInfo.cs
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\NoSqlDatabaseProject.csproj.CoreCompileInputs.cache
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\NoSqlDat.398C52EE.Up2Date
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\NoSqlDatabaseProject.dll
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\refint\NoSqlDatabaseProject.dll
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\NoSqlDatabaseProject.pdb
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\NoSqlDatabaseProject.genruntimeconfig.cache
+C:\Windows\System32\NoSqlDatabaseProject\obj\Debug\net8.0\ref\NoSqlDatabaseProject.dll
