@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "DFzSOJrh+DA=",
+  "success": true,
+  "projectFilePath": "C:\\Windows\\System32\\NoSqlDatabaseWPF\\NoSqlDatabaseWPF.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\андрей\\.nuget\\packages\\litedb\\5.0.20\\litedb.5.0.20.nupkg.sha512"
+  ],
+  "logs": []
+}
