@@ -1,16 +1,18 @@
-﻿<Window x:Class="NoSqlDatabaseWPF.MainWindow"
+<Window x:Class="NoSqlDatabaseWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="NoSQL Database" Height="350" Width="525">
+        Title="NoSQL Database" Height="800" Width="600">
     <Grid>
         <StackPanel>
-            <TextBlock Text="Name" Margin="10"/>
-            <TextBox Name="NameTextBox" Width="200" Margin="10"/>
-            <TextBlock Text="Description" Margin="10"/>
-            <TextBox Name="DescriptionTextBox" Width="200" Margin="10"/>
-            <Button Content="Add Document" Width="200" Margin="10" Click="AddDocument_Click"/>
-            <Button Content="View Documents" Width="200" Margin="10" Click="ViewDocuments_Click"/>
-            <ListBox Name="DocumentsListBox" Width="200" Height="150" Margin="10"/>
+            <TextBlock Text="Назва документу" Margin="14"/>
+            <TextBox Name="NameTextBox" Width="200" Margin="14"/>
+            <TextBlock Text="Опис документу" Margin="14"/>
+            <TextBox Name="DescriptionTextBox" Width="200" Margin="14"/>
+            <Button Content="Додати документ" Width="200" Margin="14" Click="AddDocument_Click"/>
+            <Button Content="Переглянути документи" Width="200" Margin="14" Click="ViewDocuments_Click"/>
+            <ListBox Name="DocumentsListBox" Width="400" Height="250" Margin="14"/>
+            <Button Content="Видалити документ" Width="200" Margin="14" Click="DeleteDocument_Click"/>
+            <Button Content="Редагувати документ" Width="200" Margin="14" Click="EditDocument_Click"/>
         </StackPanel>
     </Grid>
 </Window>
