@@ -1,129 +1,90 @@
-using System;
-using System.Linq;
-using System.Windows;
 using LiteDB;
-using Newtonsoft.Json;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace NoSqlDatabaseWPF
 {
     public partial class MainWindow : Window
     {
-        private readonly LiteDatabase _database;
-        private readonly ILiteCollection<BsonDocument> _documentsCollection;
+        public LiteDatabase Database { get; set; }
+        public ILiteCollection<BsonDocument> DocumentsCollection { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            _database = new LiteDatabase(@"MyData.db");
-            _documentsCollection = _database.GetCollection<BsonDocument>("documents");
+            Database = new LiteDatabase(@"MyData.db");
+            DocumentsCollection = Database.GetCollection<BsonDocument>("documents");
+            LoadDocuments();
         }
 
-        private void AddDocument_Click(object sender, RoutedEventArgs e)
+        public void LoadDocuments()
         {
-            var document = new Document
-            {
-                Id = Guid.NewGuid(),
-                Name = NameTextBox.Text,
-                Description = DescriptionTextBox.Text
-            };
-
-            var json = JsonConvert.SerializeObject(document);
-            var bsonDoc = LiteDB.JsonSerializer.Deserialize(json).AsDocument;
-
-            _documentsCollection.Insert(bsonDoc);
-            MessageBox.Show($"Документ успішно доданий та має такий ID: {document.Id}");
-            NameTextBox.Clear();
-            DescriptionTextBox.Clear();
-
-            // Логування
-            Console.WriteLine($"Доданий документ: {json}");
-        }
-
-        private void ViewDocuments_Click(object sender, RoutedEventArgs e)
-        {
-            var documents = _documentsCollection.FindAll().ToList();
+            var documents = DocumentsCollection.FindAll();
             DocumentsListBox.Items.Clear();
-            foreach (var bsonDoc in documents)
+            foreach (var doc in documents)
             {
-                var json = LiteDB.JsonSerializer.Serialize(bsonDoc);
-                var doc = JsonConvert.DeserializeObject<Document>(json);
-                DocumentsListBox.Items.Add($"{doc.Id} - {doc.Name}: {doc.Description}");
+                var name = doc["Name"].AsString;
+                var description = doc["Description"].AsString;
+                DocumentsListBox.Items.Add($"{name} - {description}");
             }
         }
 
-        private void DeleteDocument_Click(object sender, RoutedEventArgs e)
+        public void AddDocument_Click(object sender, RoutedEventArgs e)
+        {
+            var doc = new BsonDocument
+            {
+                ["Name"] = NameTextBox.Text,
+                ["Description"] = DescriptionTextBox.Text
+            };
+            DocumentsCollection.Insert(doc);
+            LoadDocuments();
+        }
+
+        public void DeleteDocument_Click(object sender, RoutedEventArgs e)
         {
             if (DocumentsListBox.SelectedItem == null)
             {
-                MessageBox.Show("Будь-ласка оберіть запис для видалення.");
+                MessageBox.Show("Please select a document to delete.");
                 return;
             }
 
             var selectedText = DocumentsListBox.SelectedItem.ToString();
-            Console.WriteLine($"Текст обраного документа: {selectedText}");
+            var selectedName = selectedText.Split('-')[0].Trim();
 
-            // Витягненння ID з обраного елемента
-            var idPart = selectedText.Split(' ')[0];
-            Console.WriteLine($"Витягнута частина ID: {idPart}");
-
-            // Перевірка коректності перетворення в Guid
-            if (Guid.TryParse(idPart, out var selectedId))
+            var docToDelete = DocumentsCollection.FindOne(d => d["Name"] == selectedName);
+            if (docToDelete != null)
             {
-                Console.WriteLine($"Розібраний ID: {selectedId}");
-
-                var deleted = _documentsCollection.Delete(new BsonValue(selectedId));
-                if (deleted)
-                {
-                    MessageBox.Show("Докумет успішно видалений!");
-                    Console.WriteLine($"Видалений документ з ID: {selectedId}");
-                }
-                else
-                {
-                    MessageBox.Show("Не вдалося видалити запис.");
-                    Console.WriteLine($"Помилка видалення документа з ID: {selectedId}");
-                }
-                ViewDocuments_Click(sender, e);
+                DocumentsCollection.Delete(docToDelete["_id"]);
+                LoadDocuments();
             }
             else
             {
-                MessageBox.Show("Помилка витягнення ID документа.");
-                Console.WriteLine("Не вдалося розібрати ID документа.");
+                MessageBox.Show("Document not found.");
             }
         }
 
-        private void EditDocument_Click(object sender, RoutedEventArgs e)
+        public void EditDocument_Click(object sender, RoutedEventArgs e)
         {
             if (DocumentsListBox.SelectedItem == null)
             {
-                MessageBox.Show("Будь-ласка оберіть запис для редагування.");
+                MessageBox.Show("Please select a document to edit.");
                 return;
             }
 
             var selectedText = DocumentsListBox.SelectedItem.ToString();
-            var selectedId = Guid.Parse(selectedText.Split(' ')[0]);
+            var selectedName = selectedText.Split('-')[0].Trim();
 
-            var document = _documentsCollection.FindById(new BsonValue(selectedId));
-            if (document != null)
+            var docToEdit = DocumentsCollection.FindOne(d => d["Name"] == selectedName);
+            if (docToEdit != null)
             {
-                var json = LiteDB.JsonSerializer.Serialize(document);
-                var doc = JsonConvert.DeserializeObject<Document>(json);
-
-                NameTextBox.Text = doc.Name;
-                DescriptionTextBox.Text = doc.Description;
-
-                var newDocument = new Document
-                {
-                    Id = doc.Id,
-                    Name = NameTextBox.Text,
-                    Description = DescriptionTextBox.Text
-                };
-
-                var bsonDoc = LiteDB.JsonSerializer.Deserialize(JsonConvert.SerializeObject(newDocument)).AsDocument;
-                _documentsCollection.Update(bsonDoc);
-
-                MessageBox.Show("Документ успішно відредагован!");
-                Console.WriteLine($"Відредагований документ: {JsonConvert.SerializeObject(newDocument)}");
-                ViewDocuments_Click(sender, e);
+                docToEdit["Name"] = NameTextBox.Text;
+                docToEdit["Description"] = DescriptionTextBox.Text;
+                DocumentsCollection.Update(docToEdit);
+                LoadDocuments();
+            }
+            else
+            {
+                MessageBox.Show("Document not found.");
             }
         }
     }
