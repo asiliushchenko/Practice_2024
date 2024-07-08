@@ -1,0 +1,15 @@
+<Window x:Class="NoSqlDatabaseWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <TextBox x:Name="NameTextBox" Text="Enter Name" Margin="5"/>
+            <TextBox x:Name="DescriptionTextBox" Text="Enter Description" Margin="5"/>
+            <Button Content="Add Document" Click="AddDocument_Click" Margin="5"/>
+            <Button Content="Delete Document" Click="DeleteDocument_Click" Margin="5"/>
+            <Button Content="Edit Document" Click="EditDocument_Click" Margin="5"/>
+            <ListBox x:Name="DocumentsListBox" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
